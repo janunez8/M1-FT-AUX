@@ -90,20 +90,11 @@ const printStaff = function (objeto) {
   // Tu código aca:
   let array = [];
   let arrNames = Object.values(objeto)[0];
-  console.log(arrNames);
-  let arrNames2 = [];
 
   for (const i in arrNames) {
-    const element = arrNames[i];
-    console.log("🚀 ~ element", element)
-	
+    let str = "The " + i + " is " + arrNames[i].name;
+    array.push(str);
   }
-  //let obj = Object.values(objeto)
-  Object.keys(objeto.staff).filter((ele) => {
-    arrNames2.push(ele);
-  });
-  console.log(arrNames2.length);
-
   return array;
 };
 console.log(printStaff(hogwarts));
@@ -135,6 +126,13 @@ var obj = {
 // a no ser que lo hagamos manualmente con el correcto uso de la consola.
 var countProps = function (obj) {
   // Tu código aca:
+  let count = Object.keys(obj).length;
+  for (const i in obj) {
+    if (typeof obj[i] === "object" && !Array.isArray(obj[i])) {
+      count += countProps(obj[i]);
+    }
+  }
+  return count;
 };
 
 console.log(countProps(obj));

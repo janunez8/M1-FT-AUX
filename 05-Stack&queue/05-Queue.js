@@ -22,7 +22,11 @@ var controlAcces = function (queue, event) {
   // crean instancia de Queue
   // los que cumplen los rquerimientos solo agregan (push) al array sus names
   // en caso que no cumplan los dequeue de la queue
-  
+  let newArray = []
+  //Condicion= Corroborrar que sea > 17 
+  //Que el ticket sea en el mismo evento
+  //Corroborar que no haya entrado otra persona que tiene el mismo numero de ticket 
+  return newArray
 };
 
 // Test Queue

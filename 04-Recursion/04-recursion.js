@@ -4,8 +4,17 @@
 
 const producto = function (array) {
   //escribe aqui tu codigo [7, 9, 3]
-
+  var acum = 1;
+  if (array.length === 0) {
+    return;
+  } else {
+    acum = acum * array.shift();
+    console.log(array);
+    console.log("🚀 ~ acum", acum);
+    return producto(array) * acum;
+  }
 };
+//console.log(producto([1, 2, 5]));
 
 // Recursividad en javascript con objetos
 // Dado un objeto con objetos anidados utilizar la recursión para crear una función
@@ -35,15 +44,19 @@ let obj = {
       },
     },
   },
-  prop1: 5,
+  prop1: { name: 3 },
   prop2: 6,
 };
 const isThere = function (obj, value) {
   // tu código aca
-  
+  let result = false;
+  for (const key in obj) {
+    if (obj[key] === value) result = true;
+    else if (typeof obj[key] === "object") result = isThere(obj[key], value);
+  }
+  return result;
 };
-console.log(isThere(obj, 6));
-
+//console.log(isThere(obj, 3));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXTRAS ---------------------------------------------------------------------------------------------------------------------
@@ -59,9 +72,12 @@ console.log(isThere(obj, 6));
 // "Par"
 
 let parImpar = (num) => {
- 
+  if (num === 0) return "Par";
+  if (num === 1) return "Impar";
+
+  return parImpar(num - 2);
 };
-console.log(parImpar(7));
+//console.log(parImpar(11));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,8 +92,14 @@ console.log(parImpar(7));
 let nuevoArray = [];
 
 function restar(n) {
-  
+  if (n === 0) {
+    return nuevoArray;
+  }
+  nuevoArray.push(n);
+  return restar(n - 1);
 }
+
+//console.log(restar(8));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,8 +110,14 @@ function restar(n) {
 // --> 'anusus aloh'
 
 function reverse(str) {
-  
+  strReverse = [];
+  for (let i = str.length - 1; i >= 0; i--) {
+    strReverse.push(str[i]);
+  }
+  return strReverse.join("");
 }
+
+//console.log(reverse("hola"));
 
 // "hola"
 //  0123
@@ -112,9 +140,19 @@ function reverse(str) {
 // Ejemplo:
 //    const array = [1, [2, [3,4]], [5,6], 7];
 //    countArray(array); --> Debería devolver 28 (1 + 2 + 3 + 4 + 5 + 6 + 7)
+//var sum = 0;
 
 var countArray = function (array) {
-  
+  let sum = 0;
+  array.map((e) => {
+    if (Array.isArray(e)) {
+      sum = sum + countArray(e); //Guarda el value por cara recursion
+    } else {
+      sum = sum + e;
+    }
+  });
+  return sum;
 };
+//console.log(countArray([1, [2, [3, 4]], [5, 6], 7]));
 
 module.exports = { producto, isThere };

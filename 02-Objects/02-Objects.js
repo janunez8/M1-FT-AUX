@@ -89,11 +89,10 @@ const printStaff = function (objeto) {
   // el arreglo debe mantener el orden que posee el staff del objeto.
   // Tu código aca:
   let array = [];
-  let arrNames = Object.values(objeto)[0];
+  let arrNames = objeto.staff;
 
   for (const i in arrNames) {
-    let str = "The " + i + " is " + arrNames[i].name;
-    array.push(str);
+    array.push("The " + i + " is " + arrNames[i].name);
   }
   return array;
 };

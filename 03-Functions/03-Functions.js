@@ -8,7 +8,27 @@ function timeConversion(time) {
   // timeConversion("09:00 PM") // "21:00"
   // tu codigo acá
 
+  if (
+    time.substr(0, 2) > 12 ||
+    time.substr(3, 2) > 60 ||
+    time.substr(6, 2) > 60 ||
+    time.length < 10
+  ) {
+    return false;
+  } else {
+    let h = parseInt(time.substr(0, 2)); //03
+    let hNew = time.substr(2, 6); //:15:00
+
+    if (h === 12 && time.substr(-2) === "PM") {
+    } else if (h === 12 && time.substr(-2) === "AM") h = "00";
+    else if (time.substr(-2) === "PM") h += 12;
+    else {
+      return time.substr(0, 8);
+    }
+    return h + hNew;
+  }
 }
+//console.log(timeConversion("03:15:00PM"));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXTRAS ---------------------------------------------------------------------------------------------------------------------
@@ -20,8 +40,14 @@ Crear una funcion saludar que pueda fijar cada vez que la guardo en una variable
 Recibira en la funcion interna el nombre a quien tiene que saludar y retornara el saludo correspondiente seguido por el nombre al ser invocada
 */
 function saludar(saludo) {
-  
+  return function (name) {
+    return saludo + " " + name;
+  };
 }
+
+greet = saludar("Hola");
+console.log(greet("Juan"));
+console.log(greet("Pedro"));
 
 /*---------------------------------------------------*/
 
@@ -30,10 +56,23 @@ Crear una funcion contador que debe incrementar de a uno cada vez que invoco la 
 Adicionalmente agregarle una funcion que cuando pasen 8 seg incremente el contador a 100.
 
 */
-function contador() {
-  
-}
 
+function contador() {
+  var count = 0;
+  setTimeout(() => {
+    console.log((count += 100));
+  }, 8000);
+  return function () {
+    count++;
+    return count;
+  };
+}
+/* let count = contador();
+
+console.log(count());
+console.log(count());
+console.log(count());
+console.log(count()); */
 
 /*---------------------------------------------------*/
 /*
@@ -47,8 +86,15 @@ parametro a la funcion global.
  Pepe(); // "El proximo año va a tener 22"
 */
 function creciendo(n) {
- 
+  return () => {
+    return `El proximo año ${n++}`;
+  };
 }
+
+/* let crecer = creciendo(20);
+console.log(crecer());
+console.log(crecer());
+console.log(crecer()); */
 
 /*---------------------------------------------------*/
 // Retorna una funcion que cuando sea invocada con un valor mayor a 50 retorne un valor decreciente,
@@ -65,8 +111,24 @@ function creciendo(n) {
 // newCounter(); // 49
 
 function arribaAbajo(n) {
-  
+  if (n > 50) {
+    return function () {
+      return n--;
+    };
+  } else {
+    return function () {
+      return n++;
+    };
+  }
 }
+
+arAba = arribaAbajo(58);
+console.log(arAba());
+console.log(arAba());
+console.log(arAba());
+console.log(arAba());
+console.log(arAba());
+console.log(arAba());
 
 /*---------------------------------------------------*/
 
@@ -80,8 +142,12 @@ function arribaAbajo(n) {
 // - multBySix(4) --> 24
 
 var closureMult = function (multiplier) {
- 
+  return function (n) {
+    return n * multiplier;
+  };
 };
+var c = closureMult(4);
+console.log(c(5));
 
 /*---------------------------------------------------*/
 
@@ -97,8 +163,23 @@ function cacheFunction(cb) {
   // si la invocas de nuevo con 5, deberia retornar 25 (guardado previament en el cache)
   // Tips, usá un objeto donde cada propiedad sea un argumento, y el valor el resultado.
   // usá hasOwnProperty!
- 
+
+  let cache = {};
+  return function (x) {
+    if (!cache.hasOwnProperty(x)) {
+      cache[x] = cb(x); //key : value
+      console.log(cache);
+    }
+    return cache[x];
+  };
 }
+
+var cache = cacheFunction(function (x) {
+  return x * 2;
+});
+console.log(cache(20));
+console.log(cache(20));
+console.log(cache(30));
 
 module.exports = {
   timeConversion,

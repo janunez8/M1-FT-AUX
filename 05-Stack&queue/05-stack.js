@@ -16,20 +16,41 @@ const { Stack, Queue } = require("../estructuras");
 
 function efectoEspejo(str) {
   //tu codigo aqui
-  
+  strReverse = [];
+  for (let i = str.length - 1; i >= 0; i--) {
+    console.log(i);
+    console.log(str[i]);
+    strReverse.push(str[i]);
+  }
+  return strReverse.join("");
 }
 
 const stackito = new Stack();
 stackito.colocar({ name: "Jaja" });
-stackito.colocar(3);
+stackito.colocar({ name: "Jeff" });
+stackito.colocar({ name: "Nuñez" });
 console.log(stackito);
+
+Stack.prototype.deleteInPos = function (pos) {
+  let newArr = [];
+  for (let i = 0; i < this.array.length; i++) {
+    if (i != pos) {
+      newArr.push(this.array.shift());
+    } else {
+      newArr.push(this.array[i]);
+    }
+  }
+  return newArr;
+};
+//stackito.deleteInPos(2);
+//console.log(stackito);
+//console.log(deleteInPos(stackito, 1))
 
 // [{{{{{{{{{{}}}}}}}}}}]
 // [{}{}{}{}{}]
 // [[{}{}{}]]
 // {[{{{{{{}}}}}}]}
 // [{{{}{}{}{}{}}}]
-
 
 // EXTRAS ---------------------------------------------------------------------------------------------------------------------
 // En los ejercicios extras no contamos con los tests, por lo que no podemos comprobar que funcione correctamente
@@ -64,10 +85,7 @@ console.log(stackito);
   ej. parentesisBalanceaDOS("(hola (que (tal)") --> Hay uno o mas paréntesis desbalanceados
   */
 
-function parentesisBalanceaDOS(str) {
- 
-}
-
+function parentesisBalanceaDOS(str) {}
 
 module.exports = {
   efectoEspejo,
